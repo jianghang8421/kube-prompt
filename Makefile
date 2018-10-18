@@ -26,7 +26,7 @@ test:  ## Run the tests.
 	@go test ./kube/...
 
 .PHONY: build
-build: main.go  ## Build a binary.
+build: main.go  ## Build a bina`ry.
 	go build -ldflags "$(LDFLAGS)"
 
 .PHONY: cross
@@ -43,7 +43,7 @@ cross: main.go  ## Build binaries for cross platform.
 arm64: main.go  ## Build binaries for cross platform.
 	mkdir -p pkg \
     GOOS="linux" GOARCH="arm64" make build; \
-    zip pkg/kube-prompt_$(VERSION)_linux_arm64.zip kube-prompt; \
+    zip pkg/kube-prompt_$(VERSION)_linux_arm64.zip kube-prompt
 	
 .PHONY: help
 help: ## Show help text
