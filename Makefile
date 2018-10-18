@@ -39,6 +39,12 @@ cross: main.go  ## Build binaries for cross platform.
 		done; \
 	done
 
+.PHONY: arm64
+arm64: main.go  ## Build binaries for cross platform.
+	mkdir -p pkg \
+    GOOS="linux" GOARCH="arm64" make build; \
+    zip pkg/kube-prompt_$(VERSION)_linux_arm64.zip kube-prompt; \
+	
 .PHONY: help
 help: ## Show help text
 	@echo "Commands:"
