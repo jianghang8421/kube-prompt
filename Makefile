@@ -36,8 +36,14 @@ code-gen: ## Generate source codes.
 .PHONY: cross
 cross: main.go  ## Build binaries for cross platform.
 	mkdir -p pkg
-	@for os in "darwin" "linux"; do \
+	@for os in "darwin"; do \
 		for arch in "amd64" "386"; do \
+			GOOS=$${os} GOARCH=$${arch} make build; \
+			zip pkg/kube-prompt_$(VERSION)_$${os}_$${arch}.zip kube-prompt; \
+		done; \
+	done
+	@for os in "linux"; do \
+		for arch in "amd64" "386" "arm64"; do \
 			GOOS=$${os} GOARCH=$${arch} make build; \
 			zip pkg/kube-prompt_$(VERSION)_$${os}_$${arch}.zip kube-prompt; \
 		done; \

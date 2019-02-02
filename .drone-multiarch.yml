@@ -1,0 +1,32 @@
+kind: pipeline
+name: amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+workspace:
+  base: /go
+  path: /src/github.com/c-bata/kube-prompt
+
+steps:
+  - name: build
+    image: golang:1.11
+    commands:
+      - git fetch
+      - apt-get update && apt-get install -y zip
+      - make setup
+      - dep ensure
+      - make cross
+      - ls ./pkg/
+  - name: github_binary_release
+    image: plugins/github-release:linux-amd64
+    settings:
+      api_key:
+        from_secret: github_token
+      files:
+        - pkg/*
+      checksum:
+        - sha256
+    when:
+      event: tag
